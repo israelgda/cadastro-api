@@ -22,7 +22,7 @@ POST  /v1/usuarios
 2. datanascimento : String (formato dd/MM/YYYY)
 3. cep : String (formato de 8 digitos. Exemplo: 57046340)
 4. cpf : String (apenas números)
-5. telefone: String
+5. telefone: String (apenas números e sem espaços, contendo DDD+Número)
 
 Exemplo:
 {

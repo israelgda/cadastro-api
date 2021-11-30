@@ -16,7 +16,7 @@ public class Usuario {
     private String bairro;
     private String estado;
     private String cpf;
-    private String email;
+    private String telefone;
 
     public Usuario(){
 

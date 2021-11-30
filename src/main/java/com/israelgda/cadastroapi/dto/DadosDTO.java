@@ -13,5 +13,5 @@ public class DadosDTO {
     private String dataNascimento;
     private String cep;
     private String cpf;
-    private String email;
+    private String telefone;
 }

@@ -17,7 +17,7 @@ public class UsuarioDTO {
     private String bairro;
     private String estado;
     private String cpf;
-    private String email;
+    private String telefone;
 
     public UsuarioDTO(Usuario usuario){
         id = usuario.getId();
@@ -27,6 +27,6 @@ public class UsuarioDTO {
         bairro = usuario.getBairro();
         estado = usuario.getEstado();
         cpf = usuario.getCpf();
-        email = usuario.getEmail();
+        telefone = usuario.getTelefone();
     }
 }

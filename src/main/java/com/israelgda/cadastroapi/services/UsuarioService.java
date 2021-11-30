@@ -50,7 +50,7 @@ public class UsuarioService {
         usuario.setBairro(enderecoDTO.getBairro());
         usuario.setEstado(enderecoDTO.getUf());
         usuario.setCpf(dadosDTO.getCpf());
-        usuario.setEmail(dadosDTO.getEmail());
+        usuario.setTelefone(dadosDTO.getTelefone());
 
         return usuario;
     }

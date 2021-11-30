@@ -24,11 +24,12 @@ public class Usuario {
 
     @NotNull
     @Column(nullable = false)
+    @Size(min = 3, max = 100)
     private String nome;
 
     @NotNull
     @Column(name= "datanascimento", nullable = false)
-    private Date dataNascimento;
+    private String dataNascimento;
 
     private String cidade;
     private String bairro;
@@ -39,7 +40,7 @@ public class Usuario {
     @Size(min = 11, max = 11)
     private String cpf;
 
-    @Size(min = 11, max = 11)
+    @Size(max = 11)
     private String telefone;
 
     public Usuario(){

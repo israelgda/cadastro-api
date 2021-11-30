@@ -14,7 +14,7 @@ public class UsuarioDTO {
 
     private Long id;
     private String nome;
-    private Date dataNascimento;
+    private String dataNascimento;
     private String cidade;
     private String bairro;
     private String estado;

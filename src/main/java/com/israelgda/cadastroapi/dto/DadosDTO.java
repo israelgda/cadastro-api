@@ -12,7 +12,7 @@ import java.util.Date;
 public class DadosDTO {
 
     private String nome;
-    private Date dataNascimento;
+    private String dataNascimento;
     private String cep;
     private String cpf;
     private String telefone;

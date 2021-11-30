@@ -12,8 +12,13 @@ public class Usuario {
     private Long id;
     private String nome;
     private String dataNascimento;
-    private String cep;
+    private String cidade;
+    private String bairro;
+    private String estado;
     private String cpf;
     private String email;
 
+    public Usuario(){
+
+    }
 }

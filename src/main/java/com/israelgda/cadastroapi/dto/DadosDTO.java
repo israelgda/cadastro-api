@@ -12,5 +12,6 @@ public class DadosDTO {
     private String nome;
     private String dataNascimento;
     private String cep;
-    private String documento;
+    private String cpf;
+    private String email;
 }

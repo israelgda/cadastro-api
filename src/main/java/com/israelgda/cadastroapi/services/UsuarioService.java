@@ -7,14 +7,13 @@ import com.israelgda.cadastroapi.entities.Usuario;
 import com.israelgda.cadastroapi.repositories.UsuarioRepository;
 import com.israelgda.cadastroapi.services.clients.CepApiClient;
 import com.israelgda.cadastroapi.services.exceptions.*;
-import com.israelgda.cadastroapi.utils.VerificadorData;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.ConstraintViolationException;
 
-import static com.israelgda.cadastroapi.utils.VerificadorData.verificaData;
+import static com.israelgda.cadastroapi.utils.VerificadorDataUtil.verificaData;
 
 @Service
 public class UsuarioService {

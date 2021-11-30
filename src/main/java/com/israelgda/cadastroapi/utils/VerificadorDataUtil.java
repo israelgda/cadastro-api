@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 
-public class VerificadorData {
+public class VerificadorDataUtil {
 
     public static String verificaData(String data){
         String dateFormat = "dd/MM/uuuu";

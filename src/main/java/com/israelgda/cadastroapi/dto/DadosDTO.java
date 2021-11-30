@@ -14,4 +14,8 @@ public class DadosDTO {
     private String cep;
     private String cpf;
     private String telefone;
+
+    public DadosDTO(){
+        
+    }
 }

@@ -7,11 +7,14 @@ import com.israelgda.cadastroapi.entities.Usuario;
 import com.israelgda.cadastroapi.repositories.UsuarioRepository;
 import com.israelgda.cadastroapi.services.clients.CepApiClient;
 import com.israelgda.cadastroapi.services.exceptions.*;
+import com.israelgda.cadastroapi.utils.VerificadorData;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.ConstraintViolationException;
+
+import static com.israelgda.cadastroapi.utils.VerificadorData.verificaData;
 
 @Service
 public class UsuarioService {
@@ -43,6 +46,8 @@ public class UsuarioService {
             throw new DataFormatViolationException("Violação de formato! Verifique os dados informados e insira corretamente.");
         } catch (DataIntegrityViolationException e){
             throw new CpfAlredyRegistered("Este CPF já encontra-se cadastrado, não é possível utilizar o mesmo.");
+        } catch (BirthDateInvalidFormatException e){
+            throw new BirthDateInvalidFormatException("Data de nascimento inválida. Verifique a data informada");
         }
     }
 
@@ -50,7 +55,7 @@ public class UsuarioService {
         Usuario usuario = new Usuario();
         usuario.setId(null);
         usuario.setNome(dadosDTO.getNome());
-        usuario.setDataNascimento(dadosDTO.getDataNascimento());
+        usuario.setDataNascimento(verificaData(dadosDTO.getDataNascimento()));
         usuario.setCidade(enderecoDTO.getLocalidade());
         usuario.setBairro(enderecoDTO.getBairro());
         usuario.setEstado(enderecoDTO.getUf());

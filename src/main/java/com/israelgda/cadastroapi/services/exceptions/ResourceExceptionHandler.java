@@ -63,6 +63,18 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(error);
     }
 
+    @ExceptionHandler(BirthDateInvalidFormatException.class)
+    public ResponseEntity<StandardError> postalCodeNotFound(BirthDateInvalidFormatException exception, HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError error = new StandardError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Date Invalid Format");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
     @ExceptionHandler(PostalCodeNotFound.class)
     public ResponseEntity<StandardError> postalCodeNotFound(PostalCodeNotFound exception, HttpServletRequest request){
         HttpStatus status = HttpStatus.NOT_FOUND;

@@ -50,6 +50,19 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(error);
     }
 
+    @ExceptionHandler(CpfAlredyRegistered.class)
+    public ResponseEntity<StandardError> postalCodeNotFound(CpfAlredyRegistered exception, HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError error = new StandardError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Duplicate Key Value Violation");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
+
     @ExceptionHandler(PostalCodeNotFound.class)
     public ResponseEntity<StandardError> postalCodeNotFound(PostalCodeNotFound exception, HttpServletRequest request){
         HttpStatus status = HttpStatus.NOT_FOUND;

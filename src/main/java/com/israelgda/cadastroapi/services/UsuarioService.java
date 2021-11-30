@@ -6,10 +6,8 @@ import com.israelgda.cadastroapi.dto.UsuarioDTO;
 import com.israelgda.cadastroapi.entities.Usuario;
 import com.israelgda.cadastroapi.repositories.UsuarioRepository;
 import com.israelgda.cadastroapi.services.clients.CepApiClient;
-import com.israelgda.cadastroapi.services.exceptions.DataFormatViolationException;
-import com.israelgda.cadastroapi.services.exceptions.PostalCodeInvalidFormatException;
-import com.israelgda.cadastroapi.services.exceptions.PostalCodeNotFound;
-import com.israelgda.cadastroapi.services.exceptions.ResourceNotFoundException;
+import com.israelgda.cadastroapi.services.exceptions.*;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -43,6 +41,8 @@ public class UsuarioService {
             throw new PostalCodeNotFound("CEP não encontrado! Verifique o número informado.");
         } catch (ConstraintViolationException e){
             throw new DataFormatViolationException("Violação de formato! Verifique os dados informados e insira corretamente.");
+        } catch (DataIntegrityViolationException e){
+            throw new CpfAlredyRegistered("Este CPF já encontra-se cadastrado, não é possível utilizar o mesmo.");
         }
     }
 

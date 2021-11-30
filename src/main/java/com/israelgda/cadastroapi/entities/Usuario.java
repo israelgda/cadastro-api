@@ -1,5 +1,6 @@
 package com.israelgda.cadastroapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -26,8 +28,7 @@ public class Usuario {
 
     @NotNull
     @Column(name= "datanascimento", nullable = false)
-    @Size(min = 10, max = 10)
-    private String dataNascimento;
+    private Date dataNascimento;
 
     private String cidade;
     private String bairro;

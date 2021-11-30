@@ -38,7 +38,8 @@ public class Usuario {
     @Size(min = 11, max = 11)
     private String cpf;
 
-    @Size(max = 11)
+    @Column(nullable = true)
+    @Size(min = 11, max = 11)
     private String telefone;
 
     public Usuario(){

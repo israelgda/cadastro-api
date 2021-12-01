@@ -42,12 +42,13 @@ GET  /v1/usuarios/{cpf}
 * A consulta dos dados do usuário é realizada através do método GET no endpoint indicado acima passando o número do cpf (apenas números) como parâmetro na requisição. Caso o usuário exista, serão exibidos os dados no corpo da response no formato exemplo:
 ```
 {
+        "id": 3,
         "nome": "José Josenildo Santos",
-        "idade": 27,
+        "dataNascimento": "08/05/1997",
         "cidade": "Maceió",
         "bairro": "Serraria",
         "estado": "Alagoas",
-        "cpf": "25548549",
+        "cpf": "11311211548",
         "telefone": "82984458965"
 }
 ```
@@ -60,12 +61,13 @@ PUT  /v1/usuarios/{id}
 * A alteração dos dados do usuário poderá ser realizada através do método PUT, passando o ID do registro por variável na URL e os dados no corpo da request no formato exemplo:
 ```
 {
+        "id": 3,
         "nome": "Nome Alterado",
-        "idade": 27,
+        "dataNascimento": 27,
         "cidade": "Maceió",
         "bairro": "Serraria",
         "estado": "Alagoas",
-        "cpf": "25548549",
+        "cpf": "11311211548",
         "telefone": "82984458965"
 }
 ```

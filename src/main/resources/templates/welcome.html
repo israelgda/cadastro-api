@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="webservice, gratuito, gratis, dados, cadatro, usuario, consulta"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap" rel="stylesheet">
+    <link href="src/main/resources/templates/css/styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>CADASTRO API - Webservice de cadastro e consulta de dados de usuário</title>
+</head>
+<header>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="https://cadastros-api.herokuapp.com/">
+            <h1>CADASTRO API</h1>
+            
+          </a>
+        </div>
+      </nav>
+</header>
+<body>
+    <div class="container">
+        <h1>Sobre o Projeto</h1>
+        <hr/>
+
+        <div class="content" >
+            <h2></h2>
+            <p>Este projeto é uma API de cadastro e consulta de dados de usuário fornecendo 
+                endpoints de CRUD completo.Para realizar a consulta de endereço o projeto está 
+                consumindo uma API externa ViaCEP e trazendo os dados de Bairro, Cidade e UF do 
+                usuário através do CEP informado.
+            </p>
+        </div>
+
+        <div class="content" >
+            <h3>Objetivo</h2>
+            <p>Este projeto foi criado com o intuito de praticar a criação de APIs Rest utilizando Java e Spring com boas práticas, qualidade de desenvolvimento e testes unitários.
+            </p>
+        </div>
+
+        <div class="content" >
+            <h3>Integração</h2>
+            <p>O projeto tem integração com a API ViaCEP para realizar a consulta do endereço de cadastro do usuário. A realização da consulta é feita por número do CEP. Documentação disponível no link abaixo:
+            </p>
+            <div class="card col-md-12">
+                <div class="card-body">
+                  <p class="card-text"><a href="https://viacep.com.br/" target="_blank">https://viacep.com.br/</a></p>
+                </div>
+            </div>
+        </div>
+
+        <h1>Funcionalidades</h1>
+        <hr/>
+
+        <div class="content">
+            <h4>Endpoint de cadastro</h3>
+            <p>
+                O cadastro é realizado através do método POST no endpoint indicado abaixo. Para realizar o cadastro, é necessário enviar os seguintes dados no corpo da requisição, em formato JSON:
+            </p>
+            <div class="alert alert-secondary" role="alert">
+                <h6>Método: POST</h6>
+                <h6>URL: /v1/usuarios</h6>
+            </div>
+            <div class="alert alert-secondary" role="alert">
+                <pre>  
+                    1. nome : String
+                    2. datanascimento : String (formato dd/MM/YYYY)
+                    3. cep : String (formato de 8 digitos. Exemplo: 57046340)
+                    4. cpf : String (apenas números)
+                    5. telefone: String (apenas números e sem espaços, contendo DDD+Número - 11 no total) (não obrigatório)
+    
+                    Exemplo:
+                    {
+                        "nome": "Marcos Marcelinho de Marques",
+                        "dataNascimento": "25/08/1989",
+                        "cep": "12023251",
+                        "cpf": "11122233345",
+                        "telefone": "82982250848"
+                    }
+                </pre>
+            </div>
+            <div class="alert alert-info" role="alert">
+                Obs.: Se não desejar cadastrar número de telefone, basta remover do corpo do request
+            </div>
+        </div>
+
+        <div class="content">
+            <h4>Endpoint de consulta</h3>
+            <p>
+                A consulta dos dados do usuário é realizada através do método GET no endpoint indicado abaixo passando o número do cpf (apenas números) como parâmetro na requisição. Caso o usuário exista, serão exibidos os dados no corpo da response no formato exemplo:
+            </p>
+            <div class="alert alert-secondary" role="alert">
+                <h6>Método: GET</h6>
+                <h6>URL: /v1/usuarios/{cpf}</h6>
+            </div>
+            <div class="alert alert-secondary" role="alert">
+                <pre>  
+                    {
+                        "id": 3,
+                        "nome": "José Josenildo Santos",
+                        "dataNascimento": "08/05/1997",
+                        "cidade": "Maceió",
+                        "bairro": "Serraria",
+                        "estado": "Alagoas",
+                        "cpf": "11311211548",
+                        "telefone": "82984458965"
+                    }
+                </pre>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Caso o cpf pesquisado não exista no registro, retornará uma resposta tratada Not Found.
+            </div>
+        </div>
+
+        <div class="content">
+            <h4>Endpoint de update</h3>
+            <p>
+                A alteração dos dados do usuário poderá ser realizada através do método PUT, passando o ID do registro por variável na URL e os dados no corpo da request no formato exemplo:
+            </p>
+            <div class="alert alert-secondary" role="alert">
+                <h6>Método: PUT</h6>
+                <h6>URL: /v1/usuarios/{id}</h6>
+            </div>
+            <div class="alert alert-secondary" role="alert">
+                <pre>  
+                    {
+                        "nome": "José Nome Alterado",
+                        "dataNascimento": "08/05/1997",
+                        "cidade": "Maceió",
+                        "bairro": "Serraria",
+                        "estado": "Alagoas",
+                        "cpf": "11311211548",
+                        "telefone": "82984458965"
+                    }
+                </pre>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Caso o id informado não exista no registro, retornará uma resposta tratada Not Found.
+            </div>
+        </div>
+
+        <div class="content">
+            <h4>Endpoint de delete</h3>
+            <p>
+                O id do registro a ser apagado deverá ser passado por variável na URL através do método DELETE.
+            </p>
+            <div class="alert alert-secondary" role="alert">
+                <h6>Método: DELETE</h6>
+                <h6>URL: /v1/usuarios/{id}</h6>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Caso o id informado não exista no registro, retornará uma resposta tratada Not Found.
+            </div>
+        </div>
+        
+        <h1>Tratamento de erros</h1>
+        <hr/>
+        <div class="content">
+            <div class="alert alert-danger" role="alert">
+                Caso a data de nascimento, cpf ou telefone ou forem passados em formatos incorretos, ou o nome tiver menos de 3 letras, será retornado um erro tratado 404(BAD REQUEST) informando que algum dado está inválido.
+            </div>
+            <div class="alert alert-danger" role="alert">
+                Caso a data de nascimento, cpf ou telefone forem passados em formatos incorretos, será retornado um erro tratado 404(BAD REQUEST) informando que algum dado está inválido.
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Caso o CEP seja inexistente, será retornar um erro tratado 404(NOT FOUND) avisando que o CEP informado não existe.
+            </div>
+            
+        </div>
+
+
+    </div>    
+</div> 
+</body>
+</html>

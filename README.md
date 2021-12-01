@@ -61,7 +61,6 @@ PUT  /v1/usuarios/{id}
 * A alteração dos dados do usuário poderá ser realizada através do método PUT, passando o ID do registro por variável na URL e os dados no corpo da request no formato exemplo:
 ```
 {
-        "id": 3,
         "nome": "Nome Alterado",
         "dataNascimento": 27,
         "cidade": "Maceió",

@@ -81,7 +81,7 @@ DELETE  /v1/usuarios/{id}
 
 ## Exceptions personalizadas para tratar erros
 
-* Caso a data de nascimento, cpf ou telefone forem passados em formatos incorretos, será retornado um erro tratado 404(BAD REQUEST) informando que algum dado está inválido.
+* Caso a data de nascimento, cpf ou telefone ou forem passados em formatos incorretos, ou o nome tiver menos de 3 letras, será retornado um erro tratado 404(BAD REQUEST) informando que algum dado está inválido.
 * Caso o CEP seja inexistente, será retornar um erro tratado 404(NOT FOUND) avisando que o CEP informado não existe.
 * Caso o CEP esteja num formato inválido, será retornado um erro tratado 404(BAD REQUEST) informando que o formato de CEP informado é inválido.
 ## Acesso a API em deploy no Heroku para testes

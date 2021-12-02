@@ -7,6 +7,7 @@ import com.israelgda.cadastroapi.constants.Constants;
 import com.israelgda.cadastroapi.repositories.UsuarioRepository;
 import com.israelgda.cadastroapi.services.exceptions.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -30,7 +31,11 @@ public class UsuarioServiceTests {
 
     private String existingDocument;
     private String nonExistingDocument;
+    private Long existingId;
+    private Long notExistingId;
     private Usuario usuario;
+    private Usuario usuarioAtualizado;
+    private UsuarioDTO usuarioAtualizadoDTO;
     private DadosDTO dadosDTO;
     private DadosDTO dadosDTOCepInexistente;
     private DadosDTO dadosDTOCepInvalido;
@@ -40,7 +45,11 @@ public class UsuarioServiceTests {
     void setUp(){
         existingDocument = "35467895";
         nonExistingDocument = "99999999";
+        existingId = 1L;
+        notExistingId = 999L;
         usuario = Constants.createUsuario();
+        usuarioAtualizado = Constants.createUsuarioAtualizado();
+        usuarioAtualizadoDTO = Constants.createUsuarioAtualizadoDTO();
         dadosDTO = Constants.createDadosDTO();
     }
 
@@ -139,5 +148,50 @@ public class UsuarioServiceTests {
         assertThrows(BirthDateInvalidFormatException.class, ()->{
             UsuarioDTO usuarioDTO = usuarioService.create(dadosDTO);
         });
+    }
+
+    @Disabled
+    @Test
+    public void updateDeveRetornarUsuarioQuandoIdExistirECepValido() throws PostalCodeNotFound {
+        when(usuarioRepository
+                .save(usuarioAtualizado))
+                .thenReturn(usuarioAtualizado);
+
+        UsuarioDTO usuarioDTO = usuarioService.update(1L, usuarioAtualizadoDTO);
+
+        assertNotNull(usuarioDTO);
+        assertEquals("Marcos", usuarioDTO.getNome());
+        assertEquals("08/05/1997", usuarioDTO.getDataNascimento());
+        assertEquals("11211311499", usuarioDTO.getCpf());
+        assertEquals("82981110888", usuarioDTO.getTelefone());
+        assertEquals("Maceió", usuarioDTO.getCidade());
+        assertEquals("Antares", usuarioDTO.getBairro());
+        assertEquals("AL", usuarioDTO.getEstado());
+    }
+
+    @Test
+    public void deleteDeveFazerNadaQuandoIdExistir(){
+        doNothing()
+                .when(usuarioRepository)
+                .deleteById(existingId);
+
+        assertDoesNotThrow(()->{
+            usuarioService.delete(existingId);
+        });
+
+        verify(usuarioRepository, times(1)).deleteById(existingId);
+    }
+
+    @Test
+    public void deleteDeveLancarResourceNotFoundExceptionQuandoIdNaoExistir(){
+        doThrow(ResourceNotFoundException.class)
+                .when(usuarioRepository)
+                .deleteById(notExistingId);
+
+        assertThrows(ResourceNotFoundException.class, ()->{
+            usuarioService.delete(notExistingId);
+        });
+
+        verify(usuarioRepository, times(1)).deleteById(notExistingId);
     }
 }

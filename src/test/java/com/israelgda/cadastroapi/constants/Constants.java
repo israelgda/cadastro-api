@@ -20,6 +20,26 @@ public class Constants {
         return usuario;
     }
 
+    public static Usuario createUsuarioAtualizado() {
+        Usuario usuarioAtualizado = Usuario.builder()
+                .id(1L)
+                .nome("Marcos")
+                .dataNascimento("08/05/1997")
+                .cidade("Maceió")
+                .bairro("Antares")
+                .estado("AL")
+                .cpf("11211311499")
+                .telefone("82999999999")
+                .build();
+
+        return usuarioAtualizado;
+    }
+
+    public static UsuarioDTO createUsuarioAtualizadoDTO(){
+        Usuario usuario = createUsuarioAtualizado();
+        return new UsuarioDTO(usuario);
+    }
+
     public static UsuarioDTO createUsuarioDTO(){
         Usuario usuario = createUsuario();
         return new UsuarioDTO(usuario);

@@ -25,7 +25,7 @@ public class CepApiClient {
             ResponseEntity<EnderecoDTO> endereco = templateApiCep.getForEntity(uri.toUriString(), EnderecoDTO.class);
 
             if(endereco.getBody().getErro() == "true"){
-               throw new PostalCodeNotFound("");
+               throw new PostalCodeNotFound("CEP não encontrado! Verifique o número informado.");
             }
 
             EnderecoDTO enderecoDTO = EnderecoDTO.builder()

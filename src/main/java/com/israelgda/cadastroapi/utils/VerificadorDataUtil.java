@@ -19,7 +19,7 @@ public class VerificadorDataUtil {
             LocalDate date = LocalDate.parse(data, dateTimeFormatter);
             return data;
         } catch (DateTimeParseException e) {
-            throw new BirthDateInvalidFormatException("");
+            throw new BirthDateInvalidFormatException("Data de nascimento inválida. Verifique a data informada.");
         }
     }
 

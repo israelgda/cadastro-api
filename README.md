@@ -62,7 +62,7 @@ PUT  /v1/usuarios/{id}
 ```
 {
         "nome": "Nome Alterado",
-        "dataNascimento": 27,
+        "dataNascimento": "08/05/1997",
         "cidade": "Maceió",
         "bairro": "Serraria",
         "estado": "Alagoas",

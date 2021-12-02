@@ -8,10 +8,13 @@ import com.israelgda.cadastroapi.repositories.UsuarioRepository;
 import com.israelgda.cadastroapi.services.clients.CepApiClient;
 import com.israelgda.cadastroapi.services.exceptions.*;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.ConstraintViolationException;
+
+import java.util.Optional;
 
 import static com.israelgda.cadastroapi.utils.VerificadorDataUtil.verificaData;
 
@@ -24,13 +27,20 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    private Usuario findById(Long id){
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Entity Not Found for Id: " + id));
+
+        return usuario;
+    }
+
     public UsuarioDTO findByCpf(String cpf){
         Usuario usuario = usuarioRepository.findByCpf(cpf)
-                .orElseThrow(()-> new ResourceNotFoundException("Entity Not Found for Document Number: " + cpf));;
+                .orElseThrow(()-> new ResourceNotFoundException("Entity Not Found for Document Number: " + cpf));
         return new UsuarioDTO(usuario);
     }
 
-    public UsuarioDTO create(DadosDTO dadosDTO) throws PostalCodeNotFound {
+    public UsuarioDTO create(DadosDTO dadosDTO) {
         try {
             EnderecoDTO enderecoDTO = CepApiClient.searchAdress(dadosDTO);
             Usuario usuario = dtoToEntity(dadosDTO, enderecoDTO);
@@ -39,14 +49,33 @@ public class UsuarioService {
             return  new UsuarioDTO(usuario);
         } catch (HttpClientErrorException e){
             throw new PostalCodeInvalidFormatException("Formato incorreto de CEP! Verifique o número informado.");
-        } catch (PostalCodeNotFound e){
-            throw new PostalCodeNotFound("CEP não encontrado! Verifique o número informado.");
         } catch (ConstraintViolationException e){
-            throw new DataFormatViolationException("Violação de formato! Verifique os dados informados e insira corretamente.");
+            throw new DataFormatViolationException("Violação de formato! Verifique o nome, cpf e telefone informados e insira corretamente.");
         } catch (DataIntegrityViolationException e){
             throw new CpfAlredyRegistered("Este CPF já encontra-se cadastrado, não é possível utilizar o mesmo.");
-        } catch (BirthDateInvalidFormatException e){
-            throw new BirthDateInvalidFormatException("Data de nascimento inválida. Verifique a data informada");
+        }
+    }
+
+    public UsuarioDTO update(Long id, UsuarioDTO usuarioDTO) {
+        try {
+            Usuario usuarioAtualizado = findById(id);
+            usuarioAtualizado = usuarioRepository.save(updateCadastro(usuarioAtualizado, usuarioDTO));
+
+            return new UsuarioDTO(usuarioAtualizado);
+        } catch (HttpClientErrorException e){
+            throw new PostalCodeInvalidFormatException("Formato incorreto de CEP! Verifique o número informado.");
+        } catch (ConstraintViolationException e){
+            throw new DataFormatViolationException("Violação de formato! Verifique o nome, cpf e telefone informados e insira corretamente.");
+        } catch (DataIntegrityViolationException e){
+            throw new CpfAlredyRegistered("Este CPF já encontra-se cadastrado, não é possível utilizar o mesmo.");
+        }
+    }
+
+    public void delete(Long id) {
+        try {
+            usuarioRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException("Entity Not Found for Id: " + id);
         }
     }
 
@@ -63,4 +92,17 @@ public class UsuarioService {
 
         return usuario;
     }
+
+    private Usuario updateCadastro(Usuario usuarioAtualizado, UsuarioDTO usuarioDTO) {
+        usuarioAtualizado.setNome(usuarioDTO.getNome());
+        usuarioAtualizado.setDataNascimento(verificaData(usuarioDTO.getDataNascimento()));
+        usuarioAtualizado.setCidade(usuarioDTO.getCidade());
+        usuarioAtualizado.setBairro(usuarioDTO.getBairro());
+        usuarioAtualizado.setEstado(usuarioDTO.getEstado());
+        usuarioAtualizado.setCpf(usuarioDTO.getCpf());
+        usuarioAtualizado.setTelefone(usuarioDTO.getTelefone());
+
+        return usuarioAtualizado;
+    }
+
 }

@@ -2,6 +2,7 @@ package com.israelgda.cadastroapi.resources;
 
 import com.israelgda.cadastroapi.dto.DadosDTO;
 import com.israelgda.cadastroapi.dto.UsuarioDTO;
+import com.israelgda.cadastroapi.entities.Usuario;
 import com.israelgda.cadastroapi.services.UsuarioService;
 import com.israelgda.cadastroapi.services.exceptions.PostalCodeNotFound;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,17 @@ public class UsuarioResource {
                 .buildAndExpand(usuarioDTO.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(usuarioDTO);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO){
+        UsuarioDTO usuarioAtualizado = usuarioService.update(id, usuarioDTO);
+        return ResponseEntity.ok().body(usuarioAtualizado);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        usuarioService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

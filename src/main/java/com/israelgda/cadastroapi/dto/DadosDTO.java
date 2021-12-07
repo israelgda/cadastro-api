@@ -25,8 +25,6 @@ public class DadosDTO {
     @Pattern(regexp = "(\\d{3}.?\\d{3}.?\\d{3}-?\\d{2})", message = "O cpf deve conter 11 digitos, apenas números.")
     private String cpf;
 
-    //@Size(min = 11, max = 11, message = "Telefone deve conter 11 digitos, apenas números.")
-    //@Pattern(regexp = "^[\"]{1}[0-9]{11}[\"]{1}$", message = "Telefone deve conter 11 digitos, apenas números.")
     @Pattern(regexp = "^[0-9]{11}$", message = "Telefone deve conter 11 digitos, apenas números.")
     private String telefone;
 

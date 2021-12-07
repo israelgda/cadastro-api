@@ -1,9 +1,9 @@
 package com.israelgda.cadastroapi.services;
 
+import com.israelgda.cadastroapi.constants.Constants;
 import com.israelgda.cadastroapi.dto.DadosDTO;
 import com.israelgda.cadastroapi.dto.UsuarioDTO;
 import com.israelgda.cadastroapi.entities.Usuario;
-import com.israelgda.cadastroapi.constants.Constants;
 import com.israelgda.cadastroapi.repositories.UsuarioRepository;
 import com.israelgda.cadastroapi.services.exceptions.*;
 import org.junit.jupiter.api.BeforeEach;

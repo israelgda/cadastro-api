@@ -22,7 +22,6 @@ public class Usuario {
 
     @NotNull
     @Column(nullable = false)
-    @Size(min = 3, max = 100)
     private String nome;
 
     @NotNull
@@ -35,11 +34,9 @@ public class Usuario {
 
     @NotNull
     @Column(unique = true)
-    @Size(min = 11, max = 11)
     private String cpf;
 
     @Column(nullable = true)
-    @Size(min = 11, max = 11)
     private String telefone;
 
     public Usuario(){

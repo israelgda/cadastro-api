@@ -7,6 +7,7 @@ import com.israelgda.cadastroapi.entities.Usuario;
 import com.israelgda.cadastroapi.repositories.UsuarioRepository;
 import com.israelgda.cadastroapi.services.clients.CepApiClient;
 import com.israelgda.cadastroapi.services.exceptions.*;
+import org.postgresql.util.PSQLException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.ConstraintViolationException;
-
-import java.util.Optional;
 
 import static com.israelgda.cadastroapi.utils.VerificadorDataUtil.verificaData;
 
@@ -54,8 +53,6 @@ public class UsuarioService {
         } catch (HttpClientErrorException e){
             throw new PostalCodeInvalidFormatException("Formato incorreto de CEP! Verifique o número informado.");
         } catch (ConstraintViolationException e){
-            throw new DataFormatViolationException("Violação de formato! Verifique o nome, cpf e telefone informados e insira corretamente.");
-        } catch (DataIntegrityViolationException e){
             throw new CpfAlredyRegistered("Este CPF já encontra-se cadastrado, não é possível utilizar o mesmo.");
         }
     }
@@ -69,8 +66,6 @@ public class UsuarioService {
             return new UsuarioDTO(usuarioAtualizado);
         } catch (HttpClientErrorException e){
             throw new PostalCodeInvalidFormatException("Formato incorreto de CEP! Verifique o número informado.");
-        } catch (ConstraintViolationException e){
-            throw new DataFormatViolationException("Violação de formato! Verifique o nome, cpf e telefone informados e insira corretamente.");
         } catch (DataIntegrityViolationException e){
             throw new CpfAlredyRegistered("Este CPF já encontra-se cadastrado, não é possível utilizar o mesmo.");
         }

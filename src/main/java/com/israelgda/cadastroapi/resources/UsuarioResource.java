@@ -5,10 +5,12 @@ import com.israelgda.cadastroapi.dto.UsuarioDTO;
 import com.israelgda.cadastroapi.entities.Usuario;
 import com.israelgda.cadastroapi.services.UsuarioService;
 import com.israelgda.cadastroapi.services.exceptions.PostalCodeNotFound;
+import org.postgresql.util.PSQLException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -28,7 +30,7 @@ public class UsuarioResource {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> create(@RequestBody DadosDTO dadosDTO) throws PostalCodeNotFound {
+    public ResponseEntity<UsuarioDTO> create(@Valid @RequestBody DadosDTO dadosDTO) throws PostalCodeNotFound {
         UsuarioDTO usuarioDTO = usuarioService.create(dadosDTO);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -39,7 +41,7 @@ public class UsuarioResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<UsuarioDTO> update(@PathVariable Long id,@Valid @RequestBody UsuarioDTO usuarioDTO) {
         UsuarioDTO usuarioAtualizado = usuarioService.update(id, usuarioDTO);
         return ResponseEntity.ok().body(usuarioAtualizado);
     }

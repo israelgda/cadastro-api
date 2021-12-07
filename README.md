@@ -47,7 +47,7 @@ GET  /v1/usuarios/{cpf}
         "dataNascimento": "08/05/1997",
         "cidade": "Maceió",
         "bairro": "Serraria",
-        "estado": "Alagoas",
+        "estado": "AL",
         "cpf": "11311211548",
         "telefone": "82984458965"
 }
@@ -65,7 +65,7 @@ PUT  /v1/usuarios/{id}
         "dataNascimento": "08/05/1997",
         "cidade": "Maceió",
         "bairro": "Serraria",
-        "estado": "Alagoas",
+        "estado": "AL",
         "cpf": "11311211548",
         "telefone": "82984458965"
 }

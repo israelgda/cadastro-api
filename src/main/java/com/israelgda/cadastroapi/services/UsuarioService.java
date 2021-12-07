@@ -75,7 +75,7 @@ public class UsuarioService {
             throw new CpfAlredyRegistered("Este CPF já encontra-se cadastrado, não é possível utilizar o mesmo.");
         }
     }
-    
+
     public void delete(Long id) {
         try {
             usuarioRepository.deleteById(id);

@@ -39,6 +39,19 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(error);
     }
 
+    @ExceptionHandler(PostalCodeNotFound.class)
+    public ResponseEntity<StandardError> postalCodeNotFound(PostalCodeNotFound exception, HttpServletRequest request){
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        StandardError error = new StandardError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Postal Code Not Found");
+        error.setMessage(exception.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
+
     @ExceptionHandler(DataFormatViolationException.class)
     public ResponseEntity<StandardError> postalCodeNotFound(DataFormatViolationException exception, HttpServletRequest request){
         HttpStatus status = HttpStatus.BAD_REQUEST;
@@ -89,18 +102,6 @@ public class ResourceExceptionHandler {
         error.setTimestamp(Instant.now());
         error.setStatus(status.value());
         error.setError("Date Invalid Format");
-        error.setMessage(exception.getMessage());
-        error.setPath(request.getRequestURI());
-
-        return ResponseEntity.status(status).body(error);
-    }
-    @ExceptionHandler(PostalCodeNotFound.class)
-    public ResponseEntity<StandardError> postalCodeNotFound(PostalCodeNotFound exception, HttpServletRequest request){
-        HttpStatus status = HttpStatus.NOT_FOUND;
-        StandardError error = new StandardError();
-        error.setTimestamp(Instant.now());
-        error.setStatus(status.value());
-        error.setError("Postal Code Not Found");
         error.setMessage(exception.getMessage());
         error.setPath(request.getRequestURI());
 

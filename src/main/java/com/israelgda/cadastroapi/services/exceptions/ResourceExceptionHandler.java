@@ -2,6 +2,8 @@ package com.israelgda.cadastroapi.services.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -46,6 +48,23 @@ public class ResourceExceptionHandler {
         error.setError("Data Format Violation");
         error.setMessage(exception.getMessage());
         error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<StandardError> postalCodeNotFound(MethodArgumentNotValidException exception, HttpServletRequest request){
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        ValidationError error = new ValidationError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Data Format Violation");
+        error.setMessage("Violação de formato! Verifique o nome, cpf e telefone informados e insira corretamente.");
+        error.setPath(request.getRequestURI());
+
+        for(FieldError f: exception.getBindingResult().getFieldErrors()) {
+            error.addError(f.getField(), f.getDefaultMessage());
+        }
 
         return ResponseEntity.status(status).body(error);
     }

@@ -2,10 +2,8 @@ package com.israelgda.cadastroapi.resources;
 
 import com.israelgda.cadastroapi.dto.DadosDTO;
 import com.israelgda.cadastroapi.dto.UsuarioDTO;
-import com.israelgda.cadastroapi.entities.Usuario;
 import com.israelgda.cadastroapi.services.UsuarioService;
 import com.israelgda.cadastroapi.services.exceptions.PostalCodeNotFound;
-import org.postgresql.util.PSQLException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,7 +22,7 @@ public class UsuarioResource {
     }
 
     @GetMapping(value="/{cpf}")
-    public ResponseEntity<UsuarioDTO> findById(@PathVariable String cpf){
+    public ResponseEntity<UsuarioDTO> findByCpf(@PathVariable String cpf){
         UsuarioDTO usuarioDTO = usuarioService.findByCpf(cpf);
         return ResponseEntity.ok().body(usuarioDTO);
     }
